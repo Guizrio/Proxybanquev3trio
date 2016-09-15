@@ -7,7 +7,6 @@ import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.ClientService;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -21,13 +20,16 @@ import java.util.List;
  */
 @ManagedBean(name = "menuConseillerBean")
 @Named
-@ConversationScoped
+@javax.faces.view.ViewScoped
 public class MenuConseillerBean implements Serializable{
 
     private static final long serialVersionUID = 5L;
 
+
     private List<Client> clients;
+
     private Client selectedClient;
+
     private Client toModificateClient;
 
     private Client clientToCreate;
@@ -44,7 +46,7 @@ public class MenuConseillerBean implements Serializable{
     }
 
     @PostConstruct
-    public void doStuff(){
+    public void init(){
         //On est obligé de faire cette méthode, parce que les injections ne sont pas réalisées avant la fin de la construction des constructeurs !!!!
         //        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
 
@@ -73,7 +75,6 @@ public class MenuConseillerBean implements Serializable{
 
         }
     }
-
 
     public String doRefresh(){
 //        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
@@ -116,7 +117,6 @@ public class MenuConseillerBean implements Serializable{
 
         } catch (DAOException e) {
             e.printStackTrace();
-
             return loginBean.getNavigateBean().redirectToError(e.getMessage());
         }
     }

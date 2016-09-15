@@ -62,7 +62,6 @@
                                         <p:commandLink update=":login-form:form:clientDetail"
                                                        oncomplete="PF('clientDialog').show()"
                                                        title="Détail des clients">
-
                                             <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;"/>
                                             <f:setPropertyActionListener value="#{client}"
                                                                          target="#{menuConseillerBean.selectedClient}"/>
@@ -170,7 +169,7 @@
                                             <h:graphicImage library="images" name="thomasT.jpg"/>
                                         </f:facet>
 
-                                        <p:dataTable var="compte" value="#{menuConseillerBean.selectedClient.comptes}">
+                                        <p:dataTable id="matabledescompte" var="compte" value="#{menuConseillerBean.selectedClient.comptes}" >
                                             <p:column headerText="Id">
                                                 <h:outputText value="#{compte.idCompte}"/>
                                             </p:column>

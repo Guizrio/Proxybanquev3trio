@@ -8,7 +8,6 @@ import com.trio.proxibanquev3.service.ClientService;
 import com.trio.proxibanquev3.service.CompteBancaireService;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -28,7 +27,7 @@ import java.util.Map;
  */
 @ManagedBean(name = "virementBean")
 @Named
-@ConversationScoped
+@javax.faces.view.ViewScoped
 public class VirementBean implements Serializable {
 
 	/**
@@ -261,6 +260,10 @@ public class VirementBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	private void resetBasics(){
 
 	}
 
