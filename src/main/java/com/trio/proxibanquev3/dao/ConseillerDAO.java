@@ -4,6 +4,7 @@ import com.trio.proxibanquev3.domaine.Conseiller;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.PersistanceService;
 
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -24,7 +25,10 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-// @Model
+//@Stateless
+//@Model
+//	@ManagedBean
+	@Default
 public class ConseillerDAO implements IConseillerDAO {
 	// private EntityManagerFactory emf =
 	// Persistence.createEntityManagerFactory("proxibanquev3-pu");
@@ -32,11 +36,14 @@ public class ConseillerDAO implements IConseillerDAO {
 	private EntityManager em = null;
 	private EntityTransaction tx = null;
 
+	public ConseillerDAO() {
+	}
+
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.trio.proxibanquev3.dao.IConseillerDAO#startContext()
-	 */
+         * (non-Javadoc)
+         *
+         * @see com.trio.proxibanquev3.dao.IConseillerDAO#startContext()
+         */
 	@Override
 	public void startContext() {
 		if (em == null) {

@@ -6,18 +6,25 @@ import com.trio.proxibanquev3.domaine.CompteBancaire;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.ClientService;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Stagiaire on 13/09/2016.
  */
 @ManagedBean
-@ViewScoped
-public class MenuConseillerBean {
+@Named
+@ConversationScoped
+public class MenuConseillerBean implements Serializable{
+
+    private static final long serialVersionUID = 5L;
 
     private List<Client> clients;
     private Client selectedClient;
@@ -27,11 +34,19 @@ public class MenuConseillerBean {
 
     private List<CompteBancaire> comptes;
 
+    @Inject
+    private LoginBean loginBean;
+
+    @Inject
+    ClientService clientService; // = new ClientService();
 
     public MenuConseillerBean() {
+    }
 
-        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
-        ClientService clientService = new ClientService();
+    @PostConstruct
+    public void doStuff(){
+        //On est obligé de faire cette méthode, parce que les injections ne sont pas réalisées avant la fin de la construction des constructeurs !!!!
+        //        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
 
         try {
 
@@ -52,20 +67,17 @@ public class MenuConseillerBean {
         } catch (DAOException e) {
 //            la ligne suivante n'est pas possible car sinon on sort du contexte géré par le listener de JSF
 //                FacesContext.getCurrentInstance().getExternalContext().redirect(loginBean.getNavigateBean().redirectToError(e.getMessage()));
-                FacesContext fc = FacesContext.getCurrentInstance();
-                NavigationHandler nh = fc.getApplication().getNavigationHandler();
-                nh.handleNavigation(fc, null, loginBean.getNavigateBean().redirectToError(e.getMessage()));
+            FacesContext fc = FacesContext.getCurrentInstance();
+            NavigationHandler nh = fc.getApplication().getNavigationHandler();
+            nh.handleNavigation(fc, null, loginBean.getNavigateBean().redirectToError(e.getMessage()));
 
         }
-
-
-
     }
 
 
     public String doRefresh(){
-        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
-        ClientService clientService = new ClientService();
+//        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
+//        ClientService clientService = new ClientService();
 
         try {
 
@@ -94,8 +106,8 @@ public class MenuConseillerBean {
     }
 
     public String doSaveTheQueen(){
-        ClientService clientService = new ClientService();
-        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
+//        ClientService clientService = new ClientService();
+//        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
 
         try {
 
@@ -110,8 +122,8 @@ public class MenuConseillerBean {
     }
 
     public String doSaveNewQueen(){
-        ClientService clientService = new ClientService();
-        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
+//        ClientService clientService = new ClientService();
+//        LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
 
         clientToCreate.setConseiller(loginBean.getConseiller());
 

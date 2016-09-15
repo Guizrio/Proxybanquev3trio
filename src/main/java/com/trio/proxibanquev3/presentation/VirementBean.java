@@ -1,24 +1,25 @@
 package com.trio.proxibanquev3.presentation;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
 import com.trio.proxibanquev3.domaine.Client;
 import com.trio.proxibanquev3.domaine.CompteBancaire;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.exception.ServiceException;
 import com.trio.proxibanquev3.service.ClientService;
 import com.trio.proxibanquev3.service.CompteBancaireService;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Managed Bean concernant les virements
@@ -27,7 +28,8 @@ import com.trio.proxibanquev3.service.CompteBancaireService;
  *
  */
 @ManagedBean(name = "virementbean")
-@ViewScoped
+@Named
+@ConversationScoped
 public class VirementBean implements Serializable {
 
 	/**
@@ -50,6 +52,16 @@ public class VirementBean implements Serializable {
 	private Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
 
 	private String sommeADebiter;
+
+	@Inject
+	CompteBancaireService cptService;// = new CompteBancaireService();
+
+	@Inject
+	ClientService clientService; // = new ClientService();
+
+
+	public VirementBean() {
+	}
 
 	/**
 	 * @return the sommeADebiter
@@ -206,7 +218,7 @@ public class VirementBean implements Serializable {
 		this.data = data;
 	}
 
-	ClientService clientService = new ClientService();
+
 
 	/**
 	 * Méthode init en post construct qui permet de charger la liste des
@@ -356,7 +368,6 @@ public class VirementBean implements Serializable {
 		double montant;
 		CompteBancaire compteDebite = null;
 		CompteBancaire compteCredite = null;
-		CompteBancaireService cptService = new CompteBancaireService();
 		if (compte1 != null && client1 != null && compte2 != null && client2 != null && sommeADebiter != null) {
 			resultat = compte1.substring(compte1.lastIndexOf("=") + 1, compte1.length());
 			idCompte1 = Long.parseLong(resultat);

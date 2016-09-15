@@ -7,6 +7,7 @@ import com.trio.proxibanquev3.domaine.Adresse;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.PersistanceService;
 
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -24,7 +25,11 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-// @Model
+//@Named(value = "adresseDao")
+//	@Stateless
+//	@Model
+//	@ManagedBean
+	@Default
 public class AdresseDAO implements IAdresseDAO {
 
 	//private static Logger logger =Logger.getLogger(AdresseDAO.class);
@@ -35,11 +40,14 @@ public class AdresseDAO implements IAdresseDAO {
 	private EntityManager em = null;
 	private EntityTransaction tx = null;
 
+	public AdresseDAO() {
+	}
+
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.trio.proxibanquev3.dao.IAdresseDAO#startContext()
-	 */
+         * (non-Javadoc)
+         *
+         * @see com.trio.proxibanquev3.dao.IAdresseDAO#startContext()
+         */
 	@Override
 	public void startContext() {
 		if (em == null) {

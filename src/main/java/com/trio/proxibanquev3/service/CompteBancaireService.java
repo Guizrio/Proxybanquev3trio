@@ -1,12 +1,14 @@
 package com.trio.proxibanquev3.service;
 
-import com.trio.proxibanquev3.dao.CompteBancaireDAO;
+import com.trio.proxibanquev3.dao.ICompteBancaireDAO;
 import com.trio.proxibanquev3.domaine.Client;
 import com.trio.proxibanquev3.domaine.CompteBancaire;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.exception.ServiceException;
 import org.apache.log4j.Logger;
 
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -17,24 +19,30 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-//@Model
+//@Named(value = "compteBanquaireService")
+	@Model
+//@ApplicationScoped
 public class CompteBancaireService implements ICompteBancaireService {
 
 	private final static Logger logger = Logger.getLogger(CompteBancaireService.class);
 
 
-	//@Inject
-	private CompteBancaireDAO compteBancaireDAO= new CompteBancaireDAO();
+	public CompteBancaireService() {
+	}
 
-	
-	
-	
+	//	@Named(value = "compteBancaireDao")
+	@Inject
+	ICompteBancaireDAO compteBancaireDao; //= new CompteBancaireDAO();
+
+
+
+
 	private boolean debite(CompteBancaire compteDebite, double montant) throws ServiceException {
 		logger.info("Une opération de débit débute.");
 		boolean goodWork = true;
 		try {
 			compteDebite.setSolde(compteDebite.getSolde()-montant);
-			compteBancaireDAO.mAJUnCompteBancaire(compteDebite);
+			compteBancaireDao.mAJUnCompteBancaire(compteDebite);
 		} catch (DAOException e) {
 
 			logger.error("L'opération de débit a échouée. Cause : Couche DAO. Tentative de rollback maison", e);
@@ -62,7 +70,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 		boolean goodWork = true;
 		try {
 			compteCredite.setSolde(compteCredite.getSolde()+montant);
-			compteBancaireDAO.mAJUnCompteBancaire(compteCredite);
+			compteBancaireDao.mAJUnCompteBancaire(compteCredite);
 		} catch (DAOException e) {
 
 			logger.error("L'opération de crédit a échouée. Cause : Couche DAO. Tentative de rollback maison", e);
@@ -119,7 +127,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	 */
 	@Override
 	public void creerUnCompteBancaire(CompteBancaire compteBancaire) throws DAOException {
-		compteBancaireDAO.creerUnCompteBancaire(compteBancaire);
+		compteBancaireDao.creerUnCompteBancaire(compteBancaire);
 		logger.info("Un compte viens d'etre créé (peut avoir échoué)");
 	}
 
@@ -129,7 +137,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public List<CompteBancaire> lireToutesLesCompteBancaires() throws DAOException {
 		logger.info("Quelqu'un demande la liste de tous les comptes banquaires.");
-		return compteBancaireDAO.lireToutesLesCompteBancaires();
+		return compteBancaireDao.lireToutesLesCompteBancaires();
 	}
 
 	/* (non-Javadoc)
@@ -138,7 +146,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public CompteBancaire lireUnCompteBancaire(long idCompteBancaire) throws DAOException {
 		logger.info("Quelqu'un demande à lire un compte banquaire par son identifiant");
-		return compteBancaireDAO.lireUnCompteBancaire(idCompteBancaire);
+		return compteBancaireDao.lireUnCompteBancaire(idCompteBancaire);
 	}
 
 	/* (non-Javadoc)
@@ -147,7 +155,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public void mAJUnCompteBancaire(CompteBancaire compteBancaire) throws DAOException {
 		logger.info("quelqu'un demande à mettre à jour un compte banquaire");
-		compteBancaireDAO.mAJUnCompteBancaire(compteBancaire);
+		compteBancaireDao.mAJUnCompteBancaire(compteBancaire);
 		logger.info("Quelqu'un a mis à jour un compte banquaire (peut avoir échoué)");
 	}
 
@@ -157,7 +165,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public void supprimerUnCompteBancaire(CompteBancaire compteBancaire) throws DAOException {
 
-		compteBancaireDAO.supprimerUnCompteBancaire(compteBancaire);
+		compteBancaireDao.supprimerUnCompteBancaire(compteBancaire);
 		logger.info("Quelqu'un a supprimé un compte banquaire (peut avoir échoué)");
 	}
 
@@ -167,7 +175,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public List<CompteBancaire> lireToutesLesCompteBancairesByClient(long idClient) throws DAOException {
 		logger.info("quelqu'un demande la liste de tous les comptes banquaire d'un client ciblé par son identifiant");
-		return compteBancaireDAO.lireToutesLesCompteBancairesByClient( idClient);
+		return compteBancaireDao.lireToutesLesCompteBancairesByClient( idClient);
 	}
 
 	/* (non-Javadoc)
@@ -176,7 +184,7 @@ public class CompteBancaireService implements ICompteBancaireService {
 	@Override
 	public List<CompteBancaire> lireToutesLesCompteBancairesByClient(Client client) throws DAOException {
 		logger.info("quelqu'un demande la liste de tous les comptes banquaires d'un client ciblé par lui-même");
-		return compteBancaireDAO.lireToutesLesCompteBancairesByClient(client);
+		return compteBancaireDao.lireToutesLesCompteBancairesByClient(client);
 	}
 
 }

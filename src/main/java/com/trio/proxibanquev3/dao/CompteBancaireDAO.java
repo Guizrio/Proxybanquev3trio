@@ -5,6 +5,7 @@ import com.trio.proxibanquev3.domaine.CompteBancaire;
 import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.PersistanceService;
 
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -24,7 +25,11 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-// @Model
+//@Named(value = "compteBanquaireDao")
+//	@Stateless
+//	@Model
+//	@ManagedBean
+	@Default
 public class CompteBancaireDAO implements ICompteBancaireDAO {
 	// private EntityManagerFactory emf =
 	// Persistence.createEntityManagerFactory("proxibanquev3-pu");
@@ -32,11 +37,14 @@ public class CompteBancaireDAO implements ICompteBancaireDAO {
 	private EntityManager em = null;
 	private EntityTransaction tx = null;
 
+	public CompteBancaireDAO() {
+	}
+
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.trio.proxibanquev3.dao.ICompteBancaireDAO#startContext()
-	 */
+         * (non-Javadoc)
+         *
+         * @see com.trio.proxibanquev3.dao.ICompteBancaireDAO#startContext()
+         */
 	@Override
 	public void startContext() {
 		if (em == null) {

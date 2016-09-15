@@ -1,9 +1,10 @@
 package com.trio.proxibanquev3.dao;
 
-import java.util.List;
-
 import com.trio.proxibanquev3.domaine.Conseiller;
 import com.trio.proxibanquev3.exception.DAOException;
+
+import javax.enterprise.inject.Model;
+import java.util.List;
 
 public interface IConseillerDAO {
 

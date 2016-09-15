@@ -6,6 +6,7 @@ import com.trio.proxibanquev3.exception.DAOException;
 import com.trio.proxibanquev3.service.PersistanceService;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -24,7 +25,11 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-//@Model
+//@Named(value = "clientDao")
+//	@Stateless
+//	@Model
+//	@ManagedBean
+	@Default
 public class ClientDAO implements IClientDAO {
 
 	// private EntityManagerFactory emf =

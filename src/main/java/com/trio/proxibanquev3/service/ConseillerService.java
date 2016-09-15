@@ -3,11 +3,13 @@
  */
 package com.trio.proxibanquev3.service;
 
-import com.trio.proxibanquev3.dao.ConseillerDAO;
+import com.trio.proxibanquev3.dao.IConseillerDAO;
 import com.trio.proxibanquev3.domaine.Conseiller;
 import com.trio.proxibanquev3.exception.DAOException;
 import org.apache.log4j.Logger;
 
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -18,13 +20,19 @@ import java.util.List;
  * @author Vincent Blameble
  *
  */
-//@Model
+//@Named(value = "conseillerService")
+	@Model
+//@ApplicationScoped
 public class ConseillerService implements IConseillerService {
 
 	private final static Logger logger = Logger.getLogger(ConseillerService.class);
-	
-	//@Inject
-	private ConseillerDAO conseillerDAO = new ConseillerDAO();
+
+
+	public ConseillerService() {
+	}
+
+	@Inject
+	IConseillerDAO conseillerDao; // = new ConseillerDAO();
 
 	
 	
@@ -33,7 +41,7 @@ public class ConseillerService implements IConseillerService {
 	 */
 	@Override
 	public void creerUnConseiller(Conseiller conseiller) throws DAOException {
-		conseillerDAO.creerUnConseiller(conseiller);
+		conseillerDao.creerUnConseiller(conseiller);
 		logger.info("Un conseiller a été créé. (peut avoir échoué)");
 	}
 
@@ -43,7 +51,7 @@ public class ConseillerService implements IConseillerService {
 	@Override
 	public List<Conseiller> lireToutesLesConseillers() throws DAOException {
 		logger.info("demande de lecture des conseillers.");
-		return conseillerDAO.lireToutesLesConseillers();
+		return conseillerDao.lireToutesLesConseillers();
 	}
 
 	/* (non-Javadoc)
@@ -52,7 +60,7 @@ public class ConseillerService implements IConseillerService {
 	@Override
 	public Conseiller lireUnConseiller(long idConseiller) throws DAOException {
 		logger.info("demande de lecture d'un conseiller par son identifiant.");
-		return conseillerDAO.lireUnConseiller(idConseiller);
+		return conseillerDao.lireUnConseiller(idConseiller);
 	}
 	
 	/* (non-Javadoc)
@@ -61,7 +69,7 @@ public class ConseillerService implements IConseillerService {
 	@Override
 	public Conseiller lireUnConseiller(String login) throws DAOException {
 		logger.info("Demande de lecture d'un conseiller par son login");
-		return conseillerDAO.lireUnConseiller(login);
+		return conseillerDao.lireUnConseiller(login);
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +78,7 @@ public class ConseillerService implements IConseillerService {
 	@Override
 	public void MAJUnConseiller(Conseiller conseiller) throws DAOException {
 
-		conseillerDAO.mAJUnConseiller(conseiller);
+		conseillerDao.mAJUnConseiller(conseiller);
 		logger.info("Un conseiller vient d'etre mis à jour (peut avoir échoué)");
 	}
 
@@ -79,7 +87,7 @@ public class ConseillerService implements IConseillerService {
 	 */
 	@Override
 	public void SupprimerUnConseiller(Conseiller conseiller) throws DAOException {
-		conseillerDAO.supprimerUnConseiller(conseiller);
+		conseillerDao.supprimerUnConseiller(conseiller);
 		logger.info("Un conseiller vient d'etre supprimé (peut avoir échoué)");
 	}
 

@@ -3,9 +3,12 @@
  */
 package com.trio.proxibanquev3.service;
 
-import com.trio.proxibanquev3.dao.ConseillerDAO;
+import com.trio.proxibanquev3.dao.IConseillerDAO;
 import com.trio.proxibanquev3.exception.DAOException;
 import org.apache.log4j.Logger;
+
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 
 /**
  * Classe permettant d'utiliser un objet AdresseService utilise lors des
@@ -15,21 +18,27 @@ import org.apache.log4j.Logger;
  * @author Vincent Blameble
  *
  */
-//@Model
+//@Named(value = "authService")
+	@Model
+//@ApplicationScoped
 public class AuthService implements IAuthService {
 
 	private final static Logger logger = Logger.getLogger(AuthService.class);
 	
-	//@Inject
-	private ConseillerDAO conseillerDAO=new ConseillerDAO();
-	
+	@Inject
+	IConseillerDAO conseillerDao; //=new ConseillerDAO();
+
+
+	public AuthService() {
+	}
+
 	/* (non-Javadoc)
-	 * @see com.trio.proxibanquev3.service.IAuthService#authentification(java.lang.String, java.lang.String)
-	 */
+         * @see com.trio.proxibanquev3.service.IAuthService#authentification(java.lang.String, java.lang.String)
+         */
 	@Override
 	public boolean authentification(String login,String password) throws DAOException{
 		logger.info("On demande a authentifier un utilisateur comme conseiller pour une session");
-		return conseillerDAO.authentification(login,password);
+		return conseillerDao.authentification(login,password);
 	}
 
 }

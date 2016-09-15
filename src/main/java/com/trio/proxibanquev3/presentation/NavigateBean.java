@@ -3,20 +3,26 @@ package com.trio.proxibanquev3.presentation;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 
 /**
  * Created by Stagiaire on 12/09/2016.
  */
 @ManagedBean
+@Named
 @SessionScoped
 public class NavigateBean implements Serializable{
 
     private static final long serialVersionUID = 2L;
 
     @ManagedProperty(value="#{errorBean}")
+    @Inject
     private ErrorBean errorBean;
 
+    public NavigateBean() {
+    }
 
     /**
      * Permet d'effectuer une redirection vers la page de login de conseiller
