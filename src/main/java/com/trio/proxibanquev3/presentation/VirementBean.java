@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +26,7 @@ import java.util.Map;
  * @author Trio
  *
  */
-@ManagedBean(name = "virementbean")
+@ManagedBean(name = "virementBean")
 @Named
 @ConversationScoped
 public class VirementBean implements Serializable {
@@ -35,7 +34,7 @@ public class VirementBean implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7L;
 
 	private List<Client> listeDesClients = new ArrayList<Client>();
 	private List<CompteBancaire> listeDesComptes = new ArrayList<CompteBancaire>();
@@ -52,6 +51,9 @@ public class VirementBean implements Serializable {
 	private Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
 
 	private String sommeADebiter;
+
+	@Inject
+	LoginBean loginBean;
 
 	@Inject
 	CompteBancaireService cptService;// = new CompteBancaireService();
@@ -300,7 +302,7 @@ public class VirementBean implements Serializable {
 	}
 
 	/**
-	 * @param client1
+	 * @param client
 	 *            the client1 to set
 	 */
 	public void setClient(String client) {
@@ -315,7 +317,7 @@ public class VirementBean implements Serializable {
 	}
 
 	/**
-	 * @param compte1
+	 * @param compte
 	 *            the compte1 to set
 	 */
 	public void setCompte(String compte) {
@@ -358,8 +360,7 @@ public class VirementBean implements Serializable {
 	 * @return un String qui redirige vers la page suivante
 	 */
 	public String validationVirement() {
-		LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("loginBean");
+//		LoginBean loginBean = (LoginBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loginBean");
 		FacesMessage msg = null;
 		String resultat;
 		Long idCompte1;

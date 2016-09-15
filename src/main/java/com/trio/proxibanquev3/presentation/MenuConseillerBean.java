@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Stagiaire on 13/09/2016.
  */
-@ManagedBean
+@ManagedBean(name = "menuConseillerBean")
 @Named
 @ConversationScoped
 public class MenuConseillerBean implements Serializable{

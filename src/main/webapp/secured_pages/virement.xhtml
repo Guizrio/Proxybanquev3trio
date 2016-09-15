@@ -26,22 +26,22 @@
 							style="margin-bottom:10px;">
 							<h:panelGrid columns="2" cellpadding="5">
 								<p:outputLabel for="client1" value="Client : " />
-								<p:selectOneMenu id="client1" value="#{virementbean.client1}"
+								<p:selectOneMenu id="client1" value="#{virementBean.client1}"
 									style="width:150px">
 									<p:ajax
-										listener="#{virementbean.chargementDesComptesAssociesClient1}"
+										listener="#{virementBean.chargementDesComptesAssociesClient1}"
 										update="compte1" />
 									<f:selectItem itemLabel="Choisissez un client" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{virementbean.clients1}" />
+									<f:selectItems value="#{virementBean.clients1}" />
 								</p:selectOneMenu>
 
 								<p:outputLabel for="compte1" value="Comptes : " />
-								<p:selectOneMenu id="compte1" value="#{virementbean.compte1}"
+								<p:selectOneMenu id="compte1" value="#{virementBean.compte1}"
 									style="width:150px">
 									<f:selectItem itemLabel="Choisissez un compte" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{virementbean.comptes1}" />
+									<f:selectItems value="#{virementBean.comptes1}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>
@@ -50,22 +50,22 @@
 							style="margin-bottom:10px;">
 							<h:panelGrid columns="2" cellpadding="5">
 								<p:outputLabel for="client2" value="Client : " />
-								<p:selectOneMenu id="client2" value="#{virementbean.client2}"
+								<p:selectOneMenu id="client2" value="#{virementBean.client2}"
 									style="width:150px">
 									<p:ajax
-										listener="#{virementbean.chargementDesComptesAssociesClient2}"
+										listener="#{virementBean.chargementDesComptesAssociesClient2}"
 										update="compte2" />
 									<f:selectItem itemLabel="Choisissez un client" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{virementbean.clients1}" />
+									<f:selectItems value="#{virementBean.clients1}" />
 								</p:selectOneMenu>
 
 								<p:outputLabel for="compte2" value="Comptes : " />
-								<p:selectOneMenu id="compte2" value="#{virementbean.compte2}"
+								<p:selectOneMenu id="compte2" value="#{virementBean.compte2}"
 									style="width:150px">
 									<f:selectItem itemLabel="Choisissez un compte" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{virementbean.comptes2}" />
+									<f:selectItems value="#{virementBean.comptes2}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>
@@ -76,7 +76,7 @@
 
 					<h:panelGrid columns="3" cellpadding="5">
 						<p:outputLabel value="Montant du virement :" />
-						<p:inputText value="#{virementbean.sommeADebiter}" />
+						<p:inputText value="#{virementBean.sommeADebiter}" />
 						<p:outputLabel value="€" />
 					</h:panelGrid>
 
@@ -84,7 +84,7 @@
 					<p:separator />
 					<p:commandButton value="Valider le virement" update="msgs"
 						style="margin-bottom:10px;"
-						action="#{virementbean.validationVirement}" icon="ui-icon-check" />
+						action="#{virementBean.validationVirement}" icon="ui-icon-check" />
 				</p:panel>
 			</h:form>
 

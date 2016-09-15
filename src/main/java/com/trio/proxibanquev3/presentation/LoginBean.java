@@ -17,7 +17,7 @@ import java.io.Serializable;
 /**
  * Created by Stagiaire on 12/09/2016.
  */
-@ManagedBean(name = "loginBean")
+@ManagedBean(name = "loginBean")        //Sert juste à avoir l'autocomplétion et la recherche incrémentale d'intelliJ dans les pages xhtml (EL interact)
 @Named
 @SessionScoped
 public class LoginBean implements Serializable{
@@ -39,7 +39,7 @@ public class LoginBean implements Serializable{
     private ConseillerService conseillerService;
 
 
-    @ManagedProperty(value="#{navigateBean}")
+    @ManagedProperty(value="#{navigateBean}")       //Pareil que plus haut...
     @Inject
     private NavigateBean navigateBean;
 
